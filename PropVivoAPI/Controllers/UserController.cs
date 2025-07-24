@@ -129,9 +129,31 @@ namespace PropVivoAPI.Controllers
             }
         }
 
+        [HttpGet]
+        public async Task<IActionResult> getallemployees()
+        {
+            try {
+                var employee = await _propvivoContext.UserMasters.Select(e => new
+                {
+                    e.UserId,
+                    e.Name,
+                    e.Email,
+                    e.Role.RoleName,
+                }).ToListAsync();
+                return Ok(new
+                {
+                    success = true,
+                    message = "All Users  fetched successfully",
+                    tasks = employee
+                });
+            } catch (Exception ex) {
+                return StatusCode(500, new { success = false, message = ex.Message });
 
+            }
 
+        }
 
+        
 
     }
 }

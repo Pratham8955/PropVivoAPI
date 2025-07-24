@@ -24,8 +24,8 @@ namespace PropVivoAPI.Controllers
             {
                 var taskassign = new TaskAssignment
                 {
-                    UserId = assign.UserId.Value,
-                    TaskId = assign.TaskId.Value,
+                    UserId = assign.UserId,
+                    TaskId = assign.TaskId,
                     AssignedAt = DateTime.UtcNow,
                     Status = assign.Status.ToString()
                 };
