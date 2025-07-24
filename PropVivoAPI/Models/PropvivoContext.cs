@@ -18,6 +18,7 @@ public partial class PropvivoContext : DbContext
         _configuration = configuration;
     }
 
+
     public virtual DbSet<BreakLogTracking> BreakLogTrackings { get; set; }
 
     public virtual DbSet<QueryMaster> QueryMasters { get; set; }
@@ -36,7 +37,7 @@ public partial class PropvivoContext : DbContext
 
     protected override void OnConfiguring(DbContextOptionsBuilder optionsBuilder)
 #warning To protect potentially sensitive information in your connection string, you should move it out of source code. You can avoid scaffolding the connection string by using the Name= syntax to read it from configuration - see https://go.microsoft.com/fwlink/?linkid=2131148. For more guidance on storing connection strings, see https://go.microsoft.com/fwlink/?LinkId=723263.
-        => optionsBuilder.UseSqlServer("Data Source=LAPTOP-L93QS3JL\\SQLEXPRESS;Initial Catalog=PROPVIVO;Integrated Security=True;Trust Server Certificate=True");
+        => optionsBuilder.UseSqlServer("Data Source=LAPTOP-L93QS3JL\\SQLEXPRESS;Initial Catalog=PROPVIVO;Integrated Security=True;Encrypt=True;Trust Server Certificate=True");
 
     protected override void OnModelCreating(ModelBuilder modelBuilder)
     {
@@ -60,6 +61,7 @@ public partial class PropvivoContext : DbContext
 
             entity.HasOne(d => d.TaskAssign).WithMany(p => p.BreakLogTrackings)
                 .HasForeignKey(d => d.TaskAssignId)
+                .OnDelete(DeleteBehavior.ClientSetNull)
                 .HasConstraintName("FK__break_log__task___48CFD27E");
         });
 
@@ -96,6 +98,7 @@ public partial class PropvivoContext : DbContext
 
             entity.HasOne(d => d.TaskAssign).WithMany(p => p.QueryMasters)
                 .HasForeignKey(d => d.TaskAssignId)
+                .OnDelete(DeleteBehavior.ClientSetNull)
                 .HasConstraintName("FK__query_mas__task___4D94879B");
         });
 
@@ -117,6 +120,7 @@ public partial class PropvivoContext : DbContext
 
             entity.HasOne(d => d.Query).WithMany(p => p.QueryResponses)
                 .HasForeignKey(d => d.QueryId)
+                .OnDelete(DeleteBehavior.ClientSetNull)
                 .HasConstraintName("FK__query_res__query__52593CB8");
         });
 
@@ -154,10 +158,12 @@ public partial class PropvivoContext : DbContext
 
             entity.HasOne(d => d.Task).WithMany(p => p.TaskAssignments)
                 .HasForeignKey(d => d.TaskId)
+                .OnDelete(DeleteBehavior.ClientSetNull)
                 .HasConstraintName("FK__task_assi__task___3F466844");
 
             entity.HasOne(d => d.User).WithMany(p => p.TaskAssignments)
                 .HasForeignKey(d => d.UserId)
+                .OnDelete(DeleteBehavior.ClientSetNull)
                 .HasConstraintName("FK__task_assi__user___3E52440B");
         });
 
@@ -187,6 +193,7 @@ public partial class PropvivoContext : DbContext
 
             entity.HasOne(d => d.CreatedByNavigation).WithMany(p => p.TaskMasters)
                 .HasForeignKey(d => d.CreatedBy)
+                .OnDelete(DeleteBehavior.ClientSetNull)
                 .HasConstraintName("FK__task_mast__creat__398D8EEE");
         });
 
@@ -210,6 +217,7 @@ public partial class PropvivoContext : DbContext
 
             entity.HasOne(d => d.TaskAssign).WithMany(p => p.TaskTimeTrackings)
                 .HasForeignKey(d => d.TaskAssignId)
+                .OnDelete(DeleteBehavior.ClientSetNull)
                 .HasConstraintName("FK__task_time__task___440B1D61");
         });
 
@@ -236,6 +244,7 @@ public partial class PropvivoContext : DbContext
 
             entity.HasOne(d => d.Role).WithMany(p => p.UserMasters)
                 .HasForeignKey(d => d.RoleId)
+                .OnDelete(DeleteBehavior.ClientSetNull)
                 .HasConstraintName("FK__user_mast__role___34C8D9D1");
         });
 

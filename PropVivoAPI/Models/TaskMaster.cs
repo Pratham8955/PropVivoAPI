@@ -7,17 +7,17 @@ public partial class TaskMaster
 {
     public int TaskId { get; set; }
 
-    public int? CreatedBy { get; set; }
+    public int CreatedBy { get; set; }
 
-    public string? TaskTitle { get; set; }
+    public string TaskTitle { get; set; } = null!;
 
-    public string? Description { get; set; }
+    public string Description { get; set; } = null!;
 
-    public string? EstimatedHrs { get; set; }
+    public string EstimatedHrs { get; set; } = null!;
 
-    public DateTime? CreatedAt { get; set; }
+    public DateTime CreatedAt { get; set; }
 
-    public virtual UserMaster? CreatedByNavigation { get; set; }
+    public virtual UserMaster CreatedByNavigation { get; set; } = null!;
 
     public virtual ICollection<TaskAssignment> TaskAssignments { get; set; } = new List<TaskAssignment>();
 }

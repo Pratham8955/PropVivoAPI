@@ -9,13 +9,13 @@ public partial class UserMaster
 
     public int RoleId { get; set; }
 
-    public string? Email { get; set; }
+    public string Email { get; set; } = null!;
 
-    public string? Name { get; set; }
+    public string Name { get; set; } = null!;
 
-    public string? Password { get; set; }
+    public string Password { get; set; } = null!;
 
-    public virtual RoleMaster? Role { get; set; }
+    public virtual RoleMaster Role { get; set; } = null!;
 
     public virtual ICollection<TaskAssignment> TaskAssignments { get; set; } = new List<TaskAssignment>();
 
