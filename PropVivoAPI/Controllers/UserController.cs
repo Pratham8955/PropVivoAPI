@@ -128,6 +128,71 @@ namespace PropVivoAPI.Controllers
                 return BadRequest(new { success = false, message = ex.Message });
             }
         }
+        
+        [HttpGet("GetUnassignedEmployees")]
+        public async Task<IActionResult> GetUnassignedEmployees()
+        {
+            var employeesWithoutManager = await _propvivoContext.UserMasters
+                .Where(u => u.RoleId == 2 && u.SuperiorId == null) 
+                .Select(u => new {
+                    u.UserId,
+                    u.Name,
+                    u.Email
+                })
+                .ToListAsync();
+
+            return Ok(employeesWithoutManager);
+        }
+
+        [HttpGet("GetByManagerId/{id}")]
+        public async Task<IActionResult> GetByManagerId(int id)
+        {
+            var employeesWithoutManager = await _propvivoContext.UserMasters
+                .Where(u => u.SuperiorId==id)
+                .Select(u => new {
+                    u.UserId,
+                    u.Name,
+                    u.Email
+                })
+                .ToListAsync();
+
+            return Ok(employeesWithoutManager);
+        }
+
+
+        [HttpPost("assignmanagertoemployee")]
+        public async Task<IActionResult> AssignManagerToEmployee([FromBody] AssignManagerDTO assignManager)
+        {
+            try
+            {
+                var employee = await _propvivoContext.UserMasters
+                .FirstOrDefaultAsync(u => u.UserId == assignManager.EmployeeId && u.RoleId == 2);
+
+                if (employee == null)
+                    return NotFound("Employee not found.");
+
+                employee.SuperiorId = assignManager.ManagerId;
+
+                _propvivoContext.UserMasters.Update(employee);
+                await _propvivoContext.SaveChangesAsync();
+                return Ok(new
+                {
+                    success = true,
+                    message = "Superior assigned successfully.",
+                    user = new
+                    {
+                        employee.UserId,
+                        employee.Name,
+                        employee.Email,
+                        employee.SuperiorId
+                    }
+                });
+            }
+            catch (Exception ex)
+            {
+                return StatusCode(500, new { success = false, message = ex.Message });
+            }
+        }
 
         [HttpGet]
         public async Task<IActionResult> getallemployees()

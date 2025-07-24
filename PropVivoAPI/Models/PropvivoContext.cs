@@ -18,7 +18,6 @@ public partial class PropvivoContext : DbContext
         _configuration = configuration;
     }
 
-
     public virtual DbSet<BreakLogTracking> BreakLogTrackings { get; set; }
 
     public virtual DbSet<QueryMaster> QueryMasters { get; set; }
@@ -241,11 +240,16 @@ public partial class PropvivoContext : DbContext
                 .IsUnicode(false)
                 .HasColumnName("password");
             entity.Property(e => e.RoleId).HasColumnName("role_id");
+            entity.Property(e => e.SuperiorId).HasColumnName("superior_id");
 
             entity.HasOne(d => d.Role).WithMany(p => p.UserMasters)
                 .HasForeignKey(d => d.RoleId)
                 .OnDelete(DeleteBehavior.ClientSetNull)
                 .HasConstraintName("FK__user_mast__role___34C8D9D1");
+
+            entity.HasOne(d => d.Superior).WithMany(p => p.InverseSuperior)
+                .HasForeignKey(d => d.SuperiorId)
+                .HasConstraintName("FK_user_master_manager");
         });
 
         OnModelCreatingPartial(modelBuilder);

@@ -15,7 +15,13 @@ public partial class UserMaster
 
     public string Password { get; set; } = null!;
 
+    public int? SuperiorId { get; set; }
+
+    public virtual ICollection<UserMaster> InverseSuperior { get; set; } = new List<UserMaster>();
+
     public virtual RoleMaster Role { get; set; } = null!;
+
+    public virtual UserMaster? Superior { get; set; }
 
     public virtual ICollection<TaskAssignment> TaskAssignments { get; set; } = new List<TaskAssignment>();
 
