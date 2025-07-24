@@ -128,4 +128,6 @@ namespace PropVivoAPI.DTO
             }
         }
     }
+
+    [HttpPost]
 }
