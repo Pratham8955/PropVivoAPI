@@ -5,8 +5,9 @@ using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore;
 using PropVivoAPI.Models;
 using Humanizer;
+using PropVivoAPI.DTO;
 
-namespace PropVivoAPI.DTO
+namespace PropVivoAPI.Controllers
 {
     [Route("api/[controller]")]
     [ApiController]
@@ -103,9 +104,9 @@ namespace PropVivoAPI.DTO
                     Email = user.Email,
                     Name = user.Name,
                     Password = hashedPassword,
-                   
+
                 };
-               
+
                 _propvivoContext.UserMasters.Add(Username);
                 await _propvivoContext.SaveChangesAsync();
                 await SendEmail(user.Email, user.Name, generatedPassword);
@@ -127,7 +128,10 @@ namespace PropVivoAPI.DTO
                 return BadRequest(new { success = false, message = ex.Message });
             }
         }
-    }
 
-    [HttpPost]
+
+
+
+
+    }
 }
