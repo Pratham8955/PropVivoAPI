@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
+using PropVivoAPI.Enums;
 
 namespace PropVivoAPI.Models;
 
@@ -15,7 +16,7 @@ public partial class QueryMaster
 
     public string IssueAttachment { get; set; } = null!;
 
-    public string Status { get; set; } = null!;
+    public String Status { get; set; } 
 
     public DateTime CreatedAt { get; set; }
 

@@ -13,7 +13,7 @@ public partial class TaskTimeTracking
 
     public DateTime? EndedAt { get; set; }
 
-    public DateTime? TotalTime { get; set; }
+    public string? TotalTime { get; set; }
 
     public virtual TaskAssignment TaskAssign { get; set; } = null!;
 }

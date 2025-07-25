@@ -18,6 +18,7 @@ public partial class PropvivoContext : DbContext
         _configuration = configuration;
     }
 
+
     public virtual DbSet<BreakLogTracking> BreakLogTrackings { get; set; }
 
     public virtual DbSet<QueryMaster> QueryMasters { get; set; }
@@ -55,14 +56,19 @@ public partial class PropvivoContext : DbContext
                 .HasColumnName("started_at");
             entity.Property(e => e.TaskAssignId).HasColumnName("task_assign_id");
             entity.Property(e => e.TotalTime)
-                .HasColumnType("datetime")
-                .HasColumnName("total_time");
+      .HasMaxLength(100)
+      .IsUnicode(false)
+      .HasColumnName("total_time");
 
             entity.HasOne(d => d.TaskAssign).WithMany(p => p.BreakLogTrackings)
                 .HasForeignKey(d => d.TaskAssignId)
                 .OnDelete(DeleteBehavior.ClientSetNull)
                 .HasConstraintName("FK__break_log__task___48CFD27E");
         });
+        modelBuilder.Entity<QueryMaster>()
+    .Property(q => q.Status)
+    .HasConversion<string>();
+
 
         modelBuilder.Entity<QueryMaster>(entity =>
         {
@@ -211,9 +217,9 @@ public partial class PropvivoContext : DbContext
                 .HasColumnName("started_at");
             entity.Property(e => e.TaskAssignId).HasColumnName("task_assign_id");
             entity.Property(e => e.TotalTime)
-                .HasColumnType("datetime")
-                .HasColumnName("total_time");
-
+         .HasMaxLength(100)
+         .IsUnicode(false)
+         .HasColumnName("total_time");
             entity.HasOne(d => d.TaskAssign).WithMany(p => p.TaskTimeTrackings)
                 .HasForeignKey(d => d.TaskAssignId)
                 .OnDelete(DeleteBehavior.ClientSetNull)
